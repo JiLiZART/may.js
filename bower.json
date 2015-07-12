@@ -1,0 +1,25 @@
+{
+  "name": "may.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/JiLiZART/may.js",
+  "authors": [
+    "Nikolay Kostyurin <jilizart@gmail.com>"
+  ],
+  "description": "Small monad like js function",
+  "main": "may.js",
+  "keywords": [
+    "js",
+    "monad",
+    "pipe",
+    "or",
+    "map"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
