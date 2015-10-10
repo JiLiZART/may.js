@@ -1,0 +1,29 @@
+{
+  "name": "may.js",
+  "version": "0.0.2",
+  "description": "Small monad like js function",
+  "main": "may.js",
+  "scripts": {
+    "test": "mocha --compilers js:babel/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JiLiZART/may.js.git"
+  },
+  "keywords": [
+    "js",
+    "monad",
+    "pipe",
+    "or",
+    "map"
+  ],
+  "author": "Nikolay Kostyurin <jilizart@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JiLiZART/may.js/issues"
+  },
+  "homepage": "https://github.com/JiLiZART/may.js#readme",
+  "devDependencies": {
+    "babel": "^5.8.23"
+  }
+}

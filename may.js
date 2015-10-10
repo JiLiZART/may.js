@@ -1,9 +1,20 @@
 (function (global) {
     'use strict';
 
+    /**
+     * Checks if given argument null or undef
+     * @param expr
+     * @returns {Boolean}
+     */
     var empty = function (expr) {
             return typeof expr === 'undefined' || expr === null;
         },
+
+        /**
+         * Checks if given argument a function
+         * @param f
+         * @returns {Boolean}
+         */
         isFunction = function (f) {
             return typeof(f) === "function"
         };
@@ -24,9 +35,17 @@
      */
     function may(val) {
         var tempValue = val,
-            or = function (oVal, nVal) {
-                return empty(oVal) ? may(nVal) : self;
+
+            /**
+             * Checks old value and returns May instance if empty
+             * @param oldValue
+             * @param newValue
+             * @returns May
+             */
+            or = function (oldValue, newValue) {
+                return empty(oldValue) ? may(newValue) : self;
             },
+
             /**
              * @type May
              */
@@ -35,57 +54,77 @@
                  * Value itself
                  */
                 value: tempValue,
+
                 /**
                  * Checked is empty value
                  * @var boolean
                  */
                 isEmpty: empty(tempValue),
+
                 /**
                  * Checked is function value
                  * @var boolean
                  */
                 isFunction: isFunction(tempValue),
+
                 /**
                  * Sets new value if old is empty
                  * @param {*} newValue
                  * @returns May
                  */
                 or: or.bind(self, tempValue),
+
                 /**
                  * @returns May
                  */
                 empty: function () {
                     return empty(tempValue) ? may(true) : may(false);
                 },
+
                 /**
-                 * @param {Function} cb
+                 * @param {Function} callback
                  * @returns May
                  */
-                pipe: function (cb) {
-                    var cbVal = cb(tempValue),
+                pipe: function (callback) {
+                    var cbVal = callback(tempValue),
                         orMay = empty(cbVal) ? self : may(cbVal);
+
                     tempValue = orMay.value;
+
                     return orMay;
                 },
+
                 /**
                  * Runs value from function as function
-                 * @param {Function} f
+                 * @param {Function} func
                  * @returns May
                  */
-                run: function (f) {
-                    var mapMay = self.map(f(tempValue));
+                run: function (func) {
+                    var mapMay = self.map(func(tempValue));
+
                     tempValue = mapMay.value;
+
                     return mapMay;
                 },
+
                 /**
                  * Map value to function
-                 * @param {Function} f
+                 * @param {Function} func
                  * @returns {*}
                  */
-                map: function (f) {
-                    return isFunction(f) ? may(f(tempValue)) : self;
+                map: function (func) {
+                    return isFunction(func) ? may(func(tempValue)) : self;
+                },
+
+                /**
+                 * Proxy passed value toString function
+                 * @returns {*}
+                 */
+                toString: function () {
+                    return self.value.toString ? self.value.toString() : self.value;
                 }
             };
+
         return self;
     }
 
